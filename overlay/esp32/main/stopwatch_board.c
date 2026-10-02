@@ -352,17 +352,9 @@ static esp_err_t render(void)
 
 typedef struct {
     gpio_num_t gpio;
-    bool sample, pressed, held, suppressed;
+    bool sample, pressed, hold_handled, suppress;
     uint64_t changed_ms, pressed_ms;
 } key_t;
-
-static bool pairing_pending(void)
-{
-    portENTER_CRITICAL(&s_status_mux);
-    bool pending = s_state == LED_STATE_PAIRING_CONFIRM_REQUIRED;
-    portEXIT_CRITICAL(&s_status_mux);
-    return pending;
-}
 
 static void poll_key(key_t *key, uint64_t now)
 {
@@ -397,8 +389,6 @@ static void board_task(void *unused)
     key_t a = {.gpio = BUTTON_A}, b = {.gpio = BUTTON_B, .hold_handled = true, .suppress = true};
     a.sample = a.pressed = gpio_get_level(BUTTON_A) == 0;
     b.sample = b.pressed = gpio_get_level(BUTTON_B) == 0;
-    a.held = a.pressed;
-    b.held = b.pressed; /* Ignore an already-held button until its release. */
     uint64_t next_frame = 0;
     unsigned render_failures = 0;
     for (;;) {

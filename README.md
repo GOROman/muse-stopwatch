@@ -71,7 +71,7 @@ SDK はコミット `7e7123e2815d3e7e3c0f2ca330f576290ae6a6a9` に固定。`.bui
 
 成功時は `{ "ok": true, "payload": {...} }`。payload の内容: elapsed_ms, remaining_ms, target_ms, laps, running, complete。0秒は無期限計測。設定変更は既存セッションをリセットします。`toggle` や `lap` は冪等ではないため通信再送で重複実行しないでください。内部エラーは `{ "ok": false, "error": { "code": "invalid_params", "message": "..." } }`、通信上はSDKが error.message を文字列に変換します。未知の名前空間はSDK側へ渡します。
 
-追加の通信コマンドテストは、公式 cJSON v1.7.19 のソースを用意し `CJSON_SOURCE=/path/to/cJSON ./tools/test-commands.sh` で実行できます。CIはホストテストのみです。
+追加の通信コマンドテストは、公式 cJSON v1.7.19 のソースを用意し `CJSON_SOURCE=/path/to/cJSON ./tools/test-commands.sh` で実行できます。CIにはホストテスト、SDK統合テスト、認証情報なしのESP32ファームウェアビルドを設定しています。各コミットの実行結果を確認してください。
 
 ## セキュリティ
 
