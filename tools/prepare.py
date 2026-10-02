@@ -43,6 +43,8 @@ def prepare(source, destination):
     replace_once(main / "app.c", '    if (strcmp(command, "device.list_vms") == 0) {',
         '    if (strncmp(command, "focus.", 6) == 0) return focus_command(command, params);\n'
         '    if (strcmp(command, "device.list_vms") == 0) {')
+    replace_once(main / "noise_control.cpp", "    cJSON *commands = cJSON_CreateObject();",
+        '    cJSON *commands = cJSON_CreateObject();\n#include "focus_commands.inc"')
     print(f"Prepared pinned Muse SDK: {destination / 'esp32'}")
 
 

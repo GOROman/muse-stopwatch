@@ -59,7 +59,7 @@ SDK はコミット `7e7123e2815d3e7e3c0f2ca330f576290ae6a6a9` に固定。`.bui
 
 ## Museからのコマンド
 
-このポートは SDK の既存の認証済み Noise control dispatcher を拡張します。公開HTTPサーバーは追加していません。自然言語での自動発見・ツール登録は同梱していないため、Muse側の利用可能な gadget command 経路から次のコマンドを送る連携が別途必要です。
+このポートは SDK の既存の認証済み Noise control dispatcher を拡張します。公開HTTPサーバーは追加していません。SDKの link.register / commands_v2 で次のコマンドをMuseへ通知します。Muse側の自然言語からの呼び出しと実機での往復通信は未検証です。
 
 | command | params | effect |
 |---|---|---|

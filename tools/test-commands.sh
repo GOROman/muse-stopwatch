@@ -9,3 +9,7 @@ cc -std=c11 -Wall -Wextra -Werror -fsanitize=undefined \
   tests/test_commands.c overlay/esp32/main/focus.c overlay/esp32/main/focus_core.c \
   "$CJSON_SOURCE/cJSON.c" -lm -o "$bin"
 "$bin"
+c++ -std=c++17 -Wall -Wextra -Werror -fsanitize=undefined \
+  -Ioverlay/esp32/main -I"$CJSON_SOURCE" \
+  tests/test_registration.cpp "$CJSON_SOURCE/cJSON.c" -lm -o "$bin"
+"$bin"
