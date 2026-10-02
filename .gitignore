@@ -1,0 +1,15 @@
+.build-sdk/
+build*/
+sdkconfig
+sdkconfig.old
+sdkconfig.local
+.env*
+*.pem
+*.key
+__pycache__/
+*.pyc
+.DS_Store
+
+# Superseded local prototype retained outside the published SDK overlay.
+firmware/
+tools/fetch_dependencies.py

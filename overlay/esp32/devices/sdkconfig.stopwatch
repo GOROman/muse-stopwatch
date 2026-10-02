@@ -1,0 +1,31 @@
+# M5Stack StopWatch C152: ESP32-S3R8, 16 MB flash, 8 MB octal PSRAM.
+# Official hardware: https://docs.m5stack.com/en/core/StopWatch
+# Factory config: https://github.com/m5stack/M5StopWatch-UserDemo/blob/main/sdkconfig.defaults
+# Load after sdkconfig.defaults. The integration script replaces led_status.c
+# with stopwatch_board.c; NONE prevents any stock LED pins being initialized.
+CONFIG_IDF_TARGET="esp32s3"
+CONFIG_HOMEHUB_LED_BACKEND_NONE=y
+# Blue B confirms pairing; holding it 5 seconds also clears SDK pairing/Wi-Fi.
+CONFIG_HOMEHUB_BUTTON_GPIO=1
+CONFIG_HOMEHUB_BLE_NAME_PREFIX="MuseGadget-Stopwatch"
+CONFIG_MUSE_ENABLED=n
+CONFIG_HOMEHUB_VOICE=n
+CONFIG_HOMEHUB_DISPLAY_COMMANDS=n
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+CONFIG_ESPTOOLPY_FLASHSIZE="16MB"
+CONFIG_ESPTOOLPY_FLASHMODE_DIO=y
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_OCT=y
+CONFIG_SPIRAM_MODE_QUAD=n
+CONFIG_SPIRAM_SPEED_80M=y
+CONFIG_SPIRAM_IGNORE_NOTFOUND=n
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240=y
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+# Keep the SDK's signed-app, non-secure-boot partition table and eFuse policy.
+# No low-power claim: Wi-Fi/BLE and the display remain active while timing.
+
+# No remote OTA, network tunnel or private support-log forwarding.
+CONFIG_HOMEHUB_OTA_ENABLED=n
+CONFIG_HOMEHUB_TUNNEL=n
+CONFIG_HOMEHUB_SUPPORT_BUG_REPORT=n

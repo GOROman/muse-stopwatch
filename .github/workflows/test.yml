@@ -1,0 +1,32 @@
+name: Validate
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  host:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./tools/test.sh
+      - name: Fetch official cJSON for dispatcher tests
+        uses: actions/checkout@v4
+        with:
+          repository: DaveGamble/cJSON
+          ref: c859b25da02955fef659d658b8f324b5cde87be3
+          path: build-cjson
+      - run: CJSON_SOURCE="$PWD/build-cjson" ./tools/test-commands.sh
+      - name: Check pinned SDK integration
+        run: python3 tools/prepare.py
+  firmware:
+    runs-on: ubuntu-latest
+    container: espressif/idf:v6.0.1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare pinned SDK
+        run: python3 tools/prepare.py
+      - name: Compile ESP32-S3 firmware without credentials
+        shell: bash
+        run: |
+          . /opt/esp/idf/export.sh
+          ./tools/build.sh build
+      # No firmware upload: end users build locally with their own SDK token.
